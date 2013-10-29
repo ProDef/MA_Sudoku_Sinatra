@@ -1,0 +1,31 @@
+.row {
+
+}
+
+div.box, div.cell {
+	display: inline-block;
+}
+
+.cell input {
+	width: 30px;
+  height: 30px;
+}
+
+.cell-row {
+
+}
+
+#sudoku {
+  font-size: 0;
+  text-align: center;
+}
+
+h2 {
+	text-align: center;	
+	font-family:"Helvetica", Arial, sans-serif;
+}
+
+body {
+  text-align: center;
+  font-family: "Helvetica", Arial, sans-serif;
+}
