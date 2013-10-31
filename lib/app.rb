@@ -1,11 +1,19 @@
 require 'sinatra'
+require 'sinatra/partial' 
+require 'rack-flash'
 require_relative 'sudoku'
 require_relative 'cell'
 require_relative 'helpers'
 
+use Rack::Flash
+register Sinatra::Partial
+
 enable :sessions
 
+set :partial_template_engine, :erb
 set :views, File.join(File.dirname(__FILE__), '..', 'views')
+set :session_secret, "bubble"
+
 
 def random_sudoku
   seed = (1..9).to_a.shuffle + Array.new(81-9, 0)
@@ -37,11 +45,21 @@ end
 
 def prepare_to_check_solution
   @check_solution = session[:check_solution]
+  if @check_solution
+    flash[:notice] = "Incorrect values are highlighted in orange"
+  end
   session[:check_solution] = nil
 end
 
 def generate_new_puzzle_if_necessary
   return if session[:current_solution]
+  sudoku = random_sudoku
+  session[:solution] = sudoku
+  session[:puzzle] = puzzle(sudoku)
+  session[:current_solution] = session[:puzzle]    
+end
+
+def generate_new_puzzle
   sudoku = random_sudoku
   session[:solution] = sudoku
   session[:puzzle] = puzzle(sudoku)
@@ -62,9 +80,15 @@ def box_order_to_row_order(cells)
   }
 end
 
+get '/new_game' do
+  generate_new_puzzle
+  @current_solution = session[:current_solution] || session[:puzzle]
+  @puzzle = session[:puzzle]
+  @solution = session[:solution]
+  redirect to("/")
+end
+
 get '/' do
-  # sudoku = random_sudoku
-  # session[:solution] = sudoku
   prepare_to_check_solution
   generate_new_puzzle_if_necessary
   @current_solution = session[:current_solution] || session[:puzzle]
@@ -72,13 +96,6 @@ get '/' do
   @solution = session[:solution]
   erb :index
 end
-
-# get '/solution' do
-#   @current_solution = session[:solution]
-#   @puzzle = @current_solution
-#   @solution = session[:solution]
-#   erb :index
-# end
 
 get '/solution' do
   @current_solution = session[:solution]
@@ -88,12 +105,7 @@ get '/solution' do
 end
 
 post '/' do
-  # the cells in HTML are ordered box by box (first box1, then box2, etc),
-  # so the form data (params['cell']) is sent using this order
-  # However, our code expects it to be row by row, so we need to transform it.
-  # puts session[:current_solution]
   cells = box_order_to_row_order(params["cell"])
-  # puts cells.inspect
   session[:current_solution] = cells.map{|value| value.to_i }.join
   session[:check_solution] = true
   redirect to("/")
