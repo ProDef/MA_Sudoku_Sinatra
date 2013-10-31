@@ -3,8 +3,14 @@ div.box, div.cell {
 }
 
 .cell input {
-	width: 30px;
-  height: 30px;
+	font-size: 14pt;
+	width: 40px;
+  height: 40px;
+  text-align: center;
+}
+
+.box {
+	outline: solid black 2px;
 }
 
 #sudoku {
@@ -23,7 +29,7 @@ body {
 }
 
 .incorrect {
-  background-color: yellow;
+  background-color: #FF7C0A;
 }
 
 .value-provided {
