@@ -84,8 +84,8 @@ form {
 }
 
 #easy_game {
-	opacity:0.85;
-	filter:alpha(opacity=85);
+/*	opacity:0.85;
+	filter:alpha(opacity=85);*/
 	position: absolute;
 	margin: 10px;
   left: 10px;
@@ -98,6 +98,7 @@ form {
 	margin: 10px;
   left: 10px;
   top: 60px;
+  border-radius: 100px;
 }
 
 #show_solution {
@@ -105,6 +106,7 @@ form {
 	margin: 10px;
   left: 10px;
   top: 100px;
+  border-radius: 100px;
 }
 
 #help {
@@ -112,7 +114,20 @@ form {
 	margin: 10px;
   left: 10px;
   top: 140px;
+  border-radius: 100px;
 }
+
+/*#help:hover {
+	color: #FFFFFF;
+}*/
+
+#restart {
+	/*position: absolute;
+	margin: 10px;
+  left: 10px;
+  top: 140px;*/
+}
+
 
 #help_box {
 	top: 100px;

@@ -2,10 +2,10 @@
 <div id="flash">
   <%= flash[:notice] %>
 </div>
-<form id="hard_game" action="/new_hard_game" method="get">
+<form id="hard_game" action="/new_game/55'" method="get">
 <button class="button">New hard game</button>
 </form>
-<form id="easy_game" action="/new_easy_game" method="get">
+<form id="easy_game" action="/new_game/35'" method="get">
 <button class="button">New easy game</button>
 </form>
 <form id="show_solution" action="/solution" method="get">
@@ -38,6 +38,9 @@
     <div>
       <button class="button">Check solution</button>
       </form>
+      <form id="restart" action="/restart" method="get">
+			<button class="button">Reset Current Game</button>
+			</form>
     </div>
   </div>
 

@@ -1,6 +1,7 @@
 require 'sinatra'
 require 'sinatra/partial' 
 require 'rack-flash'
+# require '../routes/routes'
 require_relative 'sudoku'
 require_relative 'cell'
 require_relative 'helpers'
@@ -13,7 +14,6 @@ enable :sessions
 set :partial_template_engine, :erb
 set :views, File.join(File.dirname(__FILE__), '..', 'views')
 set :session_secret, "bubble"
-
 
 def random_sudoku
   seed = (1..9).to_a.shuffle + Array.new(81-9, 0)
@@ -59,13 +59,6 @@ def generate_new_puzzle_if_necessary
   session[:current_solution] = session[:puzzle]    
 end
 
-# def generate_new_easy_puzzle
-#   sudoku = random_sudoku
-#   session[:solution] = sudoku
-#   session[:puzzle] = puzzle(sudoku,35)
-#   session[:current_solution] = session[:puzzle]    
-# end
-
 def generate_new_puzzle cells_to_remove = 55
   sudoku = random_sudoku
   session[:solution] = sudoku
@@ -87,16 +80,8 @@ def box_order_to_row_order(cells)
   }
 end
 
-# get '/new_game' do
-#   generate_new_hard_puzzle
-#   @current_solution = session[:current_solution] || session[:puzzle]
-#   @puzzle = session[:puzzle]
-#   @solution = session[:solution]
-#   redirect to("/")
-# end
-
-get '/new_game' do
-  generate_new_puzzle(params[:remove].to_i)
+get '/new_game/:cells_to_remove' do
+  generate_new_puzzle(params[:cells_to_remove].to_i)
   @current_solution = session[:current_solution] || session[:puzzle]
   @puzzle = session[:puzzle]
   @solution = session[:solution]
@@ -127,6 +112,11 @@ post '/' do
   cells = box_order_to_row_order(params["cell"])
   session[:current_solution] = cells.map{|value| value.to_i }.join
   session[:check_solution] = true
+  redirect to("/")
+end
+
+get '/restart' do
+  session[:current_solution] = session[:puzzle]
   redirect to("/")
 end
 
