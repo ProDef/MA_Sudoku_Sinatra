@@ -1,15 +1,21 @@
-<html>
-<head>
-  <title>Sudoku Game</title>   
-  <link href="/stylesheets/application.css" rel="stylesheet" type="text/css">
-</head>
-<body>
-<h1>Life is too short for playing Sudoku</h1>
+<h1>Sudoku With The Stars</h1>
 <div id="flash">
   <%= flash[:notice] %>
 </div>
+<form id="hard_game" action="/new_hard_game" method="get">
+<button class="button">New hard game</button>
+</form>
+<form id="easy_game" action="/new_easy_game" method="get">
+<button class="button">New easy game</button>
+</form>
+<form id="show_solution" action="/solution" method="get">
+<button class="button">Show solution</button>
+</form>
+<form id="help" action="/help" method="get">
+<button class="button">Help</button>
+</form>
 <div id="sudoku">
-  <form action="/" method="post">
+  <form id="check_solution" action="/" method="post">
   <!-- one div for each row -->
   <% 3.times do |row| %>
     <div class='row'>
@@ -21,7 +27,7 @@
               <div class="cell-row">
              <% 3.times do |cell| %>
                     <!-- every cell will have an input field -->
-										<%= partial :cell, :locals=>{ cell_index: row*27+box*3+cell_row*9+cell} %>
+                    <%= partial :cell, :locals=>{ cell_index: row*27+box*3+cell_row*9+cell} %>
                 <% end %>
               </div>
             <% end %>
@@ -29,12 +35,10 @@
         <% end %>
       </div>
     <% end %>
-    <button class="button">Check solution</button>
-    </form>
-    <form action="/new_game" method="get">
-    <button class="button">New game</button>
-    </form>
+    <div>
+      <button class="button">Check solution</button>
+      </form>
+    </div>
   </div>
-</body>
-</html>
+
 

@@ -3,8 +3,37 @@
     src: url('/fonts/American_Captain.ttf'); 
 }
 
+@font-face {
+    font-family: 'Tele'; 
+    src: url('/fonts/telegrafico.ttf'); 
+}
+
 div.box, div.cell {
 	display: inline-block;
+}
+
+h1 {
+	font-size: 28px;
+	text-align: center;	
+	color: white;
+	font-family: 'Tele', "Helvetica", Arial, sans-serif;
+	margin: 30px;
+}
+
+body {
+  text-align: center;
+  font-family: "Helvetica", Arial, sans-serif;	
+  background-image:url("/images/night_sky.jpg");
+}
+
+form {
+	margin: 0; 
+  padding: 0;
+}
+
+#sudoku {
+  font-size: 0;
+  text-align: center;
 }
 
 .cell input {
@@ -13,7 +42,7 @@ div.box, div.cell {
   height: 40px;
   text-align: center;
   opacity:0.85;
-	filter:alpha(opacity=85); 
+	filter:alpha(opacity=85);
 }
 
 .cell input:hover { 
@@ -22,34 +51,11 @@ div.box, div.cell {
 	filter:alpha(opacity=100);
 }
 
-/*.box {
-	outline: solid black 2px;
-}*/
-
 .box {
-  border-style:solid;
-  border-width:2px;
-  margin-top:-2px;
-  margin-left:-2px;
-}
-
-#sudoku {
-  margin: 20px;
-  font-size: 0;
-  text-align: center;
-}
-
-h1 {
-	text-align: center;	
-	color: white;
-	font-family: 'AmericanCaptain', "Helvetica", Arial, sans-serif;
-	margin: 30px;
-}
-
-body {
-  text-align: center;
-  font-family: "Helvetica", Arial, sans-serif;	
-  background-image:url("/images/night_sky.jpg");
+  border-style: solid;
+  border-width: 3px;
+  margin-top: -3px;
+  margin-left: -3px;
 }
 
 .incorrect {
@@ -61,19 +67,62 @@ body {
 }
 
 .button {
-	font-family: 'AmericanCaptain', "Helvetica", Arial, sans-serif;
+	font-family: 'Tele', "Helvetica", Arial, sans-serif;
 	font-size: 22;
-	margin: 20px;
+	border-radius: 20px;
 }
 
 #flash {
   margin: 20px;
   color: #FF7C0A;
-  font-family: 'AmericanCaptain', "Helvetica", Arial, sans-serif;
+  font-family: 'Tele', "Helvetica", Arial, sans-serif;
   font-size: 18;
 }
 
+#check_solution {
+	margin: 20px;
+}
 
+#easy_game {
+	opacity:0.85;
+	filter:alpha(opacity=85);
+	position: absolute;
+	margin: 10px;
+  left: 10px;
+  top: 20px;
+  border-radius: 100px;
+}
 
+#hard_game {
+	position: absolute;
+	margin: 10px;
+  left: 10px;
+  top: 60px;
+}
 
+#show_solution {
+	position: absolute;
+	margin: 10px;
+  left: 10px;
+  top: 100px;
+}
+
+#help {
+	position: absolute;
+	margin: 10px;
+  left: 10px;
+  top: 140px;
+}
+
+#help_box {
+	top: 100px;
+	margin: auto;
+	width: 500px;
+	height: 300px;
+	color: white;
+	font-size: 14pt;
+  text-align: center;
+  opacity:0.5;
+	filter:alpha(opacity=50);
+}
 

@@ -38,9 +38,9 @@ def insert_number_of_blanks_in sudoku, number
 	sudoku
 end
 
-def puzzle(sudoku)
+def puzzle(sudoku, num_to_remove)
 	sudoku_copy = sudoku.dup
-	insert_number_of_blanks_in sudoku_copy, 40
+	insert_number_of_blanks_in sudoku_copy, num_to_remove
 end
 
 def prepare_to_check_solution
@@ -55,14 +55,21 @@ def generate_new_puzzle_if_necessary
   return if session[:current_solution]
   sudoku = random_sudoku
   session[:solution] = sudoku
-  session[:puzzle] = puzzle(sudoku)
+  session[:puzzle] = puzzle(sudoku,55)
   session[:current_solution] = session[:puzzle]    
 end
 
-def generate_new_puzzle
+# def generate_new_easy_puzzle
+#   sudoku = random_sudoku
+#   session[:solution] = sudoku
+#   session[:puzzle] = puzzle(sudoku,35)
+#   session[:current_solution] = session[:puzzle]    
+# end
+
+def generate_new_puzzle cells_to_remove = 55
   sudoku = random_sudoku
   session[:solution] = sudoku
-  session[:puzzle] = puzzle(sudoku)
+  session[:puzzle] = puzzle(sudoku,cells_to_remove)
   session[:current_solution] = session[:puzzle]    
 end
 
@@ -80,8 +87,16 @@ def box_order_to_row_order(cells)
   }
 end
 
+# get '/new_game' do
+#   generate_new_hard_puzzle
+#   @current_solution = session[:current_solution] || session[:puzzle]
+#   @puzzle = session[:puzzle]
+#   @solution = session[:solution]
+#   redirect to("/")
+# end
+
 get '/new_game' do
-  generate_new_puzzle
+  generate_new_puzzle(params[:remove].to_i)
   @current_solution = session[:current_solution] || session[:puzzle]
   @puzzle = session[:puzzle]
   @solution = session[:solution]
@@ -102,6 +117,10 @@ get '/solution' do
   @puzzle = session[:puzzle]
   @solution = session[:solution]
   erb :index
+end
+
+get '/help' do
+  erb :help
 end
 
 post '/' do
