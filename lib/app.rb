@@ -1,10 +1,15 @@
 require 'sinatra'
 require 'sinatra/partial' 
 require 'rack-flash'
+configure :production do
+  require 'newrelic_rpm'
+end
 # require '../routes/routes'
 require_relative 'sudoku'
 require_relative 'cell'
 require_relative 'helpers'
+
+# heroku config:set RACK_ENV=production
 
 use Rack::Flash
 register Sinatra::Partial
