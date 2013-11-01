@@ -13,13 +13,27 @@ enable :sessions
 
 set :partial_template_engine, :erb
 set :views, File.join(File.dirname(__FILE__), '..', 'views')
+set :publie_folder, File.join(File.dirname(__FILE__), '..', 'public')
 set :session_secret, "bubble"
 
 def random_sudoku
-  seed = (1..9).to_a.shuffle + Array.new(81-9, 0)
+  seed = (1..9).to_a.shuffle + Array.new(72, 0)
   sudoku = Sudoku.new(seed.join)
   sudoku.solve!
   sudoku.to_s.chars
+end
+
+def empty_sudoku 
+  blank_cells = Array.new(81,0)
+  sudoku = Sudoku.new(blank_cells)
+  sudoku.to_s.chars
+end
+
+def generate_empty_sudoku
+  sudoku = empty_sudoku
+  session[:solution] = sudoku
+  session[:puzzle] = sudoku
+  session[:current_solution] = session[:puzzle]    
 end
 
 def remove_one_value_from sudoku
@@ -67,6 +81,7 @@ def generate_new_puzzle cells_to_remove = 55
 end
 
 def box_order_to_row_order(cells)
+  # puts cells.inspect
   boxes = cells.each_slice(9).to_a
   (0..8).to_a.inject([]) { |memo, i|
     first_box_index = i / 3 * 3
@@ -109,15 +124,25 @@ get '/help' do
 end
 
 post '/' do
+  if !params['save']
+    session[:check_solution] = true
+  end
   cells = box_order_to_row_order(params["cell"])
   session[:current_solution] = cells.map{|value| value.to_i }.join
-  session[:check_solution] = true
   redirect to("/")
 end
 
 get '/restart' do
   session[:current_solution] = session[:puzzle]
   redirect to("/")
+end
+
+get '/solver' do
+  generate_empty_sudoku
+  @current_solution = session[:current_solution] 
+  @puzzle = session[:puzzle]
+  @solution = session[:solution]
+  erb :index
 end
 
 
