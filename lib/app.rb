@@ -81,8 +81,8 @@ def generate_new_puzzle cells_to_remove = 55
   session[:solution] = sudoku
   session[:puzzle] = puzzle(sudoku,cells_to_remove)
   session[:current_solution] = session[:puzzle]    
-end
-
+end 
+  
 def box_order_to_row_order(cells)
   boxes = cells.each_slice(9).to_a
   (0..8).to_a.inject([]) { |memo, i|
