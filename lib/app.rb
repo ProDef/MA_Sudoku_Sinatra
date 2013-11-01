@@ -9,8 +9,6 @@ require_relative 'sudoku'
 require_relative 'cell'
 require_relative 'helpers'
 
-# heroku config:set RACK_ENV=production
-
 use Rack::Flash
 register Sinatra::Partial
 
@@ -86,7 +84,6 @@ def generate_new_puzzle cells_to_remove = 55
 end
 
 def box_order_to_row_order(cells)
-  # puts cells.inspect
   boxes = cells.each_slice(9).to_a
   (0..8).to_a.inject([]) { |memo, i|
     first_box_index = i / 3 * 3
