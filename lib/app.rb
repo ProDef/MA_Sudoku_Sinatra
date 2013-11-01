@@ -13,7 +13,7 @@ enable :sessions
 
 set :partial_template_engine, :erb
 set :views, File.join(File.dirname(__FILE__), '..', 'views')
-set :publie_folder, File.join(File.dirname(__FILE__), '..', 'public')
+set :public_folder, File.join(File.dirname(__FILE__), '..', 'public')
 set :session_secret, "bubble"
 
 def random_sudoku
